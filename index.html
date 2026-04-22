@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0e0606" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Ascend" />
+  <meta name="description" content="Torne-se seu eu ascendido. Auto-maestria gamificada." />
+  <title>Ascend</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+<!-- ─── ONBOARDING ─── -->
+<div id="onboarding" class="screen active">
+  <div class="onboard-bg"></div>
+
+  <!-- Step 0: Intro -->
+  <div class="onboard-step active" data-step="0">
+    <div class="onboard-glyph">⬡</div>
+    <h1 class="brand-title">ASCEND</h1>
+    <p class="brand-sub">Um reino entre o que você é<br>e o que está se tornando.</p>
+    <p class="onboard-body">Você não está aqui para rastrear hábitos.<br>Você está aqui para forjar um self.</p>
+    <button class="btn-primary" onclick="App.onboard.next()">Iniciar o Ritual</button>
+  </div>
+
+  <!-- Step 1: Name -->
+  <div class="onboard-step" data-step="1">
+    <div class="onboard-step-label">I · NOMEAÇÃO</div>
+    <h2 class="onboard-title">Qual nome seu Self Ascendido carregará?</h2>
+    <p class="onboard-body">Este não é quem você é hoje. É quem você está se tornando.</p>
+    <input type="text" id="char-name" class="field-input" placeholder="Seu nome..." maxlength="30" />
+    <button class="btn-primary" onclick="App.onboard.next()">Continuar</button>
+  </div>
+
+  <!-- Step 2: Archetype — 8 classes -->
+  <div class="onboard-step" data-step="2">
+    <div class="onboard-step-label">II · ARQUÉTIPO</div>
+    <h2 class="onboard-title">Qual caminho te chama?</h2>
+    <p class="onboard-body">Seu arquétipo molda como seu mundo interior cresce.</p>
+    <div class="archetype-grid">
+      <button class="archetype-card" data-arch="Warrior" onclick="App.onboard.selectArchetype(this)">
+        <span class="arch-icon">⚔</span>
+        <span class="arch-name">Guerreiro</span>
+        <span class="arch-desc">Força &amp; Disciplina</span>
+      </button>
+      <button class="archetype-card" data-arch="Mago" onclick="App.onboard.selectArchetype(this)">
+        <span class="arch-icon">✦</span>
+        <span class="arch-name">Mago</span>
+        <span class="arch-desc">Foco &amp; Arcano</span>
+      </button>
+      <button class="archetype-card" data-arch="Guardião" onclick="App.onboard.selectArchetype(this)">
+        <span class="arch-icon">◈</span>
+        <span class="arch-name">Guardião</span>
+        <span class="arch-desc">Resistência &amp; Equilíbrio</span>
+      </button>
+      <button class="archetype-card" data-arch="Sombra" onclick="App.onboard.selectArchetype(this)">
+        <span class="arch-icon">◆</span>
+        <span class="arch-name">Sombra</span>
+        <span class="arch-desc">Agilidade &amp; Engano</span>
+      </button>
+      <button class="archetype-card" data-arch="Paladino" onclick="App.onboard.selectArchetype(this)">
+        <span class="arch-icon">✙</span>
+        <span class="arch-name">Paladino</span>
+        <span class="arch-desc">Honra &amp; Propósito</span>
+      </button>
+      <button class="archetype-card" data-arch="Erudito" onclick="App.onboard.selectArchetype(this)">
+        <span class="arch-icon">♟</span>
+        <span class="arch-name">Erudito</span>
+        <span class="arch-desc">Estratégia &amp; Clareza</span>
+      </button>
+      <button class="archetype-card" data-arch="Arauto" onclick="App.onboard.selectArchetype(this)">
+        <span class="arch-icon">♪</span>
+        <span class="arch-name">Arauto</span>
+        <span class="arch-desc">Carisma &amp; Criação</span>
+      </button>
+      <button class="archetype-card" data-arch="Druida" onclick="App.onboard.selectArchetype(this)">
+        <span class="arch-icon">☽</span>
+        <span class="arch-name">Druida</span>
+        <span class="arch-desc">Harmonia &amp; Ciclos</span>
+      </button>
+    </div>
+    <button class="btn-primary" id="arch-btn" disabled onclick="App.onboard.next()">Continuar</button>
+  </div>
+
+  <!-- Step 3: Traits -->
+  <div class="onboard-step" data-step="3">
+    <div class="onboard-step-label">III · INTENÇÃO</div>
+    <h2 class="onboard-title">O que você busca dominar?</h2>
+    <p class="onboard-body">Escolha até três. Eles moldarão suas primeiras missões.</p>
+    <div class="trait-grid" id="trait-grid">
+      <button class="trait-pill" data-trait="Força Física" onclick="App.onboard.toggleTrait(this)">Força Física</button>
+      <button class="trait-pill" data-trait="Clareza Mental" onclick="App.onboard.toggleTrait(this)">Clareza Mental</button>
+      <button class="trait-pill" data-trait="Foco Profundo" onclick="App.onboard.toggleTrait(this)">Foco Profundo</button>
+      <button class="trait-pill" data-trait="Controle Emocional" onclick="App.onboard.toggleTrait(this)">Controle Emocional</button>
+      <button class="trait-pill" data-trait="Poder Criativo" onclick="App.onboard.toggleTrait(this)">Poder Criativo</button>
+      <button class="trait-pill" data-trait="Maestria Financeira" onclick="App.onboard.toggleTrait(this)">Maestria Financeira</button>
+      <button class="trait-pill" data-trait="Serenidade Interior" onclick="App.onboard.toggleTrait(this)">Serenidade Interior</button>
+      <button class="trait-pill" data-trait="Presença Social" onclick="App.onboard.toggleTrait(this)">Presença Social</button>
+    </div>
+    <button class="btn-primary" onclick="App.onboard.finish()">Entrar no Mundo Interior</button>
+  </div>
+
+  <!-- Step 4: Awakening -->
+  <div class="onboard-step" data-step="4">
+    <div class="awaken-container">
+      <div class="awaken-ring ring-1"></div>
+      <div class="awaken-ring ring-2"></div>
+      <div class="awaken-ring ring-3"></div>
+      <div class="awaken-glyph" id="awaken-glyph">⬡</div>
+    </div>
+    <h2 class="onboard-title" id="awaken-name">O Guerreiro Desperta</h2>
+    <p class="onboard-body">Seu mundo interior desperta. O primeiro ciclo começa agora.<br>Cada ação aqui ecoa pelo reino interior.</p>
+  </div>
+</div>
+
+<!-- ─── MAIN APP ─── -->
+<div id="app" class="screen hidden">
+
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <span class="brand-glyph">⬡</span>
+      <span class="brand-name">ASCEND</span>
+    </div>
+    <div class="top-bar-right">
+      <div class="xp-mini" id="xp-mini-bar">
+        <span id="header-level" class="level-badge">Lv.1</span>
+        <div class="xp-bar-mini">
+          <div class="xp-fill-mini" id="xp-fill-mini"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Container -->
+  <main class="page-container">
+
+    <!-- ── DASHBOARD ── -->
+    <section class="page active" id="page-dashboard">
+      <div class="page-scroll">
+        <div class="narrative-banner" id="narrative-banner">
+          <span class="narrative-icon">◈</span>
+          <p id="narrative-text">O ciclo começa. Seu reino aguarda sua vontade.</p>
+        </div>
+        <div class="char-card" id="dash-char-card">
+          <div class="char-card-top">
+            <div class="char-avatar" id="dash-avatar">
+              <div class="avatar-ring"></div>
+              <span class="avatar-glyph" id="avatar-glyph">⚔</span>
+            </div>
+            <div class="char-info">
+              <div class="char-level-row">
+                <span class="char-level" id="dash-level">Level 1</span>
+                <span class="char-archetype" id="dash-archetype">Warrior</span>
+              </div>
+              <h2 class="char-name" id="dash-name">—</h2>
+              <div class="xp-bar-wrap">
+                <div class="xp-bar">
+                  <div class="xp-fill" id="dash-xp-fill"></div>
+                </div>
+                <span class="xp-label" id="dash-xp-label">0 / 100 XP</span>
+              </div>
+            </div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-chip"><span class="stat-icon">⚡</span><span class="stat-name">STR</span><span class="stat-val" id="stat-str">0</span></div>
+            <div class="stat-chip"><span class="stat-icon">🔱</span><span class="stat-name">DIS</span><span class="stat-val" id="stat-dis">0</span></div>
+            <div class="stat-chip"><span class="stat-icon">◎</span><span class="stat-name">FOC</span><span class="stat-val" id="stat-foc">0</span></div>
+            <div class="stat-chip"><span class="stat-icon">✦</span><span class="stat-name">ENE</span><span class="stat-val" id="stat-ene">0</span></div>
+          </div>
+        </div>
+        <div class="streak-bar">
+          <span class="streak-icon">🔥</span>
+          <span class="streak-text"><strong id="streak-count">0</strong> dias de sequência</span>
+          <span class="streak-sub" id="streak-sub">Comece sua sequência hoje</span>
+        </div>
+        <div class="section-header">
+          <h3 class="section-title">Missões de Hoje</h3>
+          <button class="btn-icon" onclick="App.missions.openAdd()">+</button>
+        </div>
+        <div id="dash-missions"></div>
+        <div id="daily-reflection" class="reflection-card"></div>
+        <div style="height:8px"></div>
+      </div>
+    </section>
+
+    <!-- ── MISSIONS ── -->
+    <section class="page" id="page-missions">
+      <div class="page-scroll">
+        <div class="missions-page-header">
+          <div class="page-header" style="margin-bottom:0">
+            <h2 class="page-title">Missões</h2>
+            <span class="sub-text" id="today-date"></span>
+          </div>
+          <button class="btn-icon" onclick="App.missions.openAdd()">+</button>
+        </div>
+        <div class="filter-row">
+          <button class="filter-tab active" onclick="App.missions.setFilter('all', this)">Todas</button>
+          <button class="filter-tab" onclick="App.missions.setFilter('habit', this)">Hábitos</button>
+          <button class="filter-tab" onclick="App.missions.setFilter('workout', this)">Treino</button>
+          <button class="filter-tab" onclick="App.missions.setFilter('task', this)">Tarefas</button>
+        </div>
+        <div id="missions-list"></div>
+      </div>
+    </section>
+
+    <!-- ── CHARACTER ── -->
+    <section class="page" id="page-character">
+      <div class="page-scroll">
+        <div class="char-page-header">
+          <div class="char-big-avatar">
+            <div class="big-ring r1"></div>
+            <div class="big-ring r2"></div>
+            <span class="big-glyph" id="char-big-glyph">⚔</span>
+          </div>
+          <div class="char-page-info">
+            <h2 class="char-page-name" id="char-page-name">—</h2>
+            <div class="char-page-row">
+              <span class="char-page-level" id="char-page-level">Level 1</span>
+              <span class="char-page-arch" id="char-page-arch">Warrior</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label">Experiência</div>
+          <div class="xp-bar" style="height:10px;margin:8px 0">
+            <div class="xp-fill" id="char-xp-fill"></div>
+          </div>
+          <div class="flex-between">
+            <span class="sub-text" id="char-xp-cur">0 XP</span>
+            <span class="sub-text" id="char-xp-next">100 XP para o próximo nível</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label">Atributos</div>
+          <div class="stats-full" id="stats-full"></div>
+        </div>
+        <div class="card">
+          <div class="card-label">Foco de Maestria</div>
+          <div class="traits-display" id="traits-display"></div>
+        </div>
+        <div class="lore-card" id="arch-lore"></div>
+      </div>
+    </section>
+
+    <!-- ── PROGRESS ── -->
+    <section class="page" id="page-progress">
+      <div class="page-scroll">
+        <div class="page-header">
+          <h2 class="page-title">O Registro</h2>
+          <span class="sub-text" id="progress-sub">Sua jornada, registrada.</span>
+        </div>
+        <div class="summary-grid">
+          <div class="summary-card"><span class="summary-val" id="prog-total-xp">0</span><span class="summary-label">XP Total</span></div>
+          <div class="summary-card"><span class="summary-val" id="prog-missions">0</span><span class="summary-label">Missões Feitas</span></div>
+          <div class="summary-card"><span class="summary-val" id="prog-streak">0</span><span class="summary-label">Melhor Sequência</span></div>
+          <div class="summary-card"><span class="summary-val" id="prog-days">0</span><span class="summary-label">Dias Ativos</span></div>
+        </div>
+        <div class="card">
+          <div class="card-label">XP Ganho — Últimos 14 Dias</div>
+          <canvas id="xp-chart" height="180"></canvas>
+        </div>
+        <div class="card">
+          <div class="card-label">Equilíbrio de Atributos</div>
+          <canvas id="radar-chart" height="220"></canvas>
+        </div>
+        <div class="card">
+          <div class="card-label">Completudes Recentes</div>
+          <div id="history-list"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-page="dashboard" onclick="App.nav('dashboard')">
+      <span class="nav-icon">⬡</span><span class="nav-label">Reino</span>
+    </button>
+    <button class="nav-btn" data-page="missions" onclick="App.nav('missions')">
+      <span class="nav-icon">◈</span><span class="nav-label">Missões</span>
+    </button>
+    <button class="nav-btn" data-page="character" onclick="App.nav('character')">
+      <span class="nav-icon">⚔</span><span class="nav-label">Self</span>
+    </button>
+    <button class="nav-btn" data-page="progress" onclick="App.nav('progress')">
+      <span class="nav-icon">◎</span><span class="nav-label">Registro</span>
+    </button>
+  </nav>
+
+</div>
+
+<!-- ─── MODALS ─── -->
+
+<!-- Add Mission Modal -->
+<div id="modal-mission" class="modal-overlay hidden" onclick="App.missions.closeAdd(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3 class="modal-title">Nova Missão</h3>
+      <button class="modal-close" onclick="App.missions.closeAdd()">✕</button>
+    </div>
+    <div class="modal-body">
+      <label class="field-label">Nome da Missão</label>
+      <input type="text" id="m-name" class="field-input" placeholder="Descreva sua missão..." />
+      <label class="field-label">Tipo</label>
+      <div class="type-selector">
+        <button class="type-btn active" data-type="habit" onclick="App.missions.setType('habit', this)">Hábito</button>
+        <button class="type-btn" data-type="workout" onclick="App.missions.setType('workout', this)">Treino</button>
+        <button class="type-btn" data-type="task" onclick="App.missions.setType('task', this)">Tarefa</button>
+      </div>
+      <label class="field-label">Dificuldade</label>
+      <div class="type-selector">
+        <button class="type-btn active" data-diff="1" onclick="App.missions.setDiff(1, this)">Fácil (+20 XP)</button>
+        <button class="type-btn" data-diff="2" onclick="App.missions.setDiff(2, this)">Médio (+50 XP)</button>
+        <button class="type-btn" data-diff="3" onclick="App.missions.setDiff(3, this)">Difícil (+100 XP)</button>
+      </div>
+      <div id="workout-extras" class="hidden">
+        <label class="field-label">Séries × Repetições</label>
+        <div class="row-2">
+          <input type="number" id="m-sets" class="field-input" placeholder="Séries" min="1" />
+          <input type="number" id="m-reps" class="field-input" placeholder="Reps" min="1" />
+        </div>
+        <label class="field-label">Notas</label>
+        <textarea id="m-notes" class="field-input" rows="2" placeholder="Peso, ritmo, dicas de forma..."></textarea>
+      </div>
+      <label class="field-label">Bônus de Atributo</label>
+      <div class="type-selector">
+        <button class="type-btn active" data-stat="strength" onclick="App.missions.setStat('strength', this)">STR</button>
+        <button class="type-btn" data-stat="discipline" onclick="App.missions.setStat('discipline', this)">DIS</button>
+        <button class="type-btn" data-stat="focus" onclick="App.missions.setStat('focus', this)">FOC</button>
+        <button class="type-btn" data-stat="energy" onclick="App.missions.setStat('energy', this)">ENE</button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="App.missions.closeAdd()">Cancelar</button>
+      <button class="btn-primary" onclick="App.missions.save()">Criar Missão</button>
+    </div>
+  </div>
+</div>
+
+<!-- Level Up Modal -->
+<div id="modal-levelup" class="modal-overlay hidden">
+  <div class="modal-box levelup-box">
+    <div class="levelup-rings">
+      <div class="lu-ring r1"></div>
+      <div class="lu-ring r2"></div>
+    </div>
+    <div class="levelup-glyph">⬡</div>
+    <div class="levelup-label">ASCENSÃO</div>
+    <h2 class="levelup-title" id="lu-level">Level 2</h2>
+    <p class="levelup-msg" id="lu-msg">Você cresce mais forte.</p>
+    <button class="btn-primary" onclick="App.closeLevelUp()">Continuar</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast hidden">
+  <span class="toast-icon">✦</span>
+  <span id="toast-msg">Missão completa.</span>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/store.js"></script>
+<script src="js/narrative.js"></script>
+<script src="js/missions.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

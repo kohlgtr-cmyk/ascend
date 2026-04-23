@@ -96,7 +96,13 @@ const Missions = {
       return !m.completedDates.includes(today) || m.completedDates.includes(today);
     });
     App.refreshDashboard();
+    // Avatar evolution
+    if (typeof AvatarUI !== 'undefined') {
+  AvatarUI.onMissionComplete(m.type, m.stat);
+    }
+
     App.updateHeader();
+
 
     // Level up?
     if (result.xpResult.leveledUp) {

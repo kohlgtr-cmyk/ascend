@@ -44,6 +44,7 @@ const App = {
     if (page === 'progress') { this.updateProgress(); Charts.refreshAll(); }
     if (page === 'missions') Missions.render('missions-list');
     if (page === 'dashboard') { this.refreshDashboard(); this.setNarrative(); }
+    if (page === 'avatar') { AvatarUI.init(); AvatarUI._updateBadge(); }
   },
 
   // ── Dashboard ─────────────────────────────────

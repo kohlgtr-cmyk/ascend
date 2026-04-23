@@ -1,0 +1,195 @@
+/* ─── AVATAR PAGE CSS ─────────────────────────────────────────── */
+/* Anexe ao final do main.css                                     */
+
+/* ── Stage ── */
+.avatar-stage {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 12px;
+  background: radial-gradient(ellipse 80% 70% at 50% 60%, color-mix(in srgb, var(--neon) 8%, var(--bg-card)) 0%, var(--bg) 75%);
+  border: 1px solid var(--border);
+}
+
+.avatar-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+}
+.avatar-canvas:active { cursor: grabbing; }
+
+.avatar-stage-overlay {
+  position: absolute;
+  top: 12px; left: 12px;
+  display: flex; flex-direction: column; gap: 6px;
+  pointer-events: none;
+}
+
+.avatar-archetype-badge {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--neon);
+  background: color-mix(in srgb, var(--neon) 12%, var(--bg-card));
+  border: 1px solid var(--neon-glow);
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-shadow: 0 0 8px var(--neon);
+}
+
+.avatar-level-glow {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--neon);
+  text-shadow: 0 0 12px var(--neon);
+  letter-spacing: 0.1em;
+}
+
+.avatar-drag-hint {
+  position: absolute;
+  bottom: 10px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  pointer-events: none;
+  animation: fadeHint 3s ease 2s forwards;
+  opacity: 1;
+}
+@keyframes fadeHint { to { opacity: 0; } }
+
+/* ── AI Status ── */
+.avatar-ai-status-wrap {
+  min-height: 20px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.avatar-ai-status {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--neon);
+  text-shadow: 0 0 8px var(--neon-glow);
+}
+
+/* ── Upload Card ── */
+.avatar-upload-card { text-align: center; }
+
+.avatar-upload-desc {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.avatar-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border: 1px solid var(--neon);
+  border-radius: var(--r);
+  color: var(--neon);
+  background: var(--neon-soft);
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 0 10px var(--neon-glow);
+  margin-bottom: 14px;
+}
+.avatar-upload-btn:hover {
+  box-shadow: 0 0 20px var(--neon-glow), 0 0 40px var(--neon-soft);
+}
+.avatar-upload-icon { font-size: 16px; }
+
+.avatar-photo-preview-wrap { display: flex; justify-content: center; }
+.avatar-photo-preview {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--neon);
+  box-shadow: 0 0 16px var(--neon-glow);
+}
+
+/* ── Form layout ── */
+.avatar-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.avatar-field { display: flex; flex-direction: column; }
+
+.avatar-optional-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin: 4px 0 10px;
+  font-family: var(--font-display);
+}
+
+.field-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8090' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+.avatar-save-btn {
+  margin-top: 8px;
+}
+
+/* ── Derived stats grid ── */
+.avatar-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.av-stat-item {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: var(--bg-elev);
+  border-radius: var(--r-sm);
+  padding: 12px 8px;
+  border: 1px solid var(--border);
+}
+.av-stat-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-mute);
+  font-family: var(--font-display);
+}
+.av-stat-val {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--neon);
+  text-shadow: 0 0 10px var(--neon-glow);
+}
+
+/* ── Evolution log ── */
+.avatar-evo-log { display: flex; flex-direction: column; gap: 0; }
+.av-evo-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+.av-evo-item:last-child { border-bottom: none; }
+.av-evo-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--neon);
+  box-shadow: 0 0 6px var(--neon);
+  flex-shrink: 0;
+}
+.av-evo-msg { font-size: 13px; color: var(--text); flex: 1; }
+.av-evo-date { font-size: 11px; color: var(--text-mute); white-space: nowrap; }

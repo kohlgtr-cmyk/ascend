@@ -1,0 +1,159 @@
+<!-- 
+  ─── AVATAR PAGE ────────────────────────────────────────────────
+  Insira este bloco dentro de <main class="page-container"> no index.html,
+  após a seção #page-character e antes de #page-progress.
+  
+  Também adicione o botão de nav abaixo em <nav class="bottom-nav">,
+  substituindo o nav existente (ver BOTTOM NAV section abaixo).
+-->
+
+<!-- ── AVATAR PAGE ── -->
+<section class="page" id="page-avatar">
+  <div class="page-scroll">
+
+    <!-- Header -->
+    <div class="page-header">
+      <h2 class="page-title">Avatar</h2>
+      <span class="sub-text">Seu corpo, em evolução</span>
+    </div>
+
+    <!-- 3D Canvas -->
+    <div class="avatar-stage">
+      <canvas id="avatar-canvas" class="avatar-canvas"></canvas>
+      <div class="avatar-stage-overlay">
+        <div class="avatar-archetype-badge" id="avatar-arch-badge">Warrior</div>
+        <div class="avatar-level-glow" id="avatar-level-glow">Lv.1</div>
+      </div>
+      <div class="avatar-drag-hint">Arraste para girar</div>
+    </div>
+
+    <!-- AI Status -->
+    <div class="avatar-ai-status-wrap">
+      <span id="avatar-ai-status" class="avatar-ai-status"></span>
+    </div>
+
+    <!-- Photo Upload -->
+    <div class="card avatar-upload-card">
+      <div class="card-label">Análise por IA</div>
+      <p class="avatar-upload-desc">
+        Envie uma selfie — a IA extrai tom de pele, cabelo e estrutura facial para personalizar seu avatar.
+      </p>
+      <label class="avatar-upload-btn" for="avatar-photo-input">
+        <span class="avatar-upload-icon">📷</span>
+        <span>Escolher foto</span>
+      </label>
+      <input type="file" id="avatar-photo-input" accept="image/*" style="display:none"
+             onchange="AvatarUI.handlePhotoUpload(event)" />
+      <div class="avatar-photo-preview-wrap">
+        <img id="avatar-photo-preview" class="avatar-photo-preview hidden" alt="preview" />
+      </div>
+    </div>
+
+    <!-- Physical Data -->
+    <div class="card">
+      <div class="card-label">Dados Físicos</div>
+
+      <div class="avatar-field-row">
+        <div class="avatar-field">
+          <label class="field-label">Altura (cm)</label>
+          <input type="number" class="field-input" id="av-height"
+                 placeholder="175" min="140" max="220"
+                 oninput="AvatarUI.onFieldChange()" />
+        </div>
+        <div class="avatar-field">
+          <label class="field-label">Peso atual (kg)</label>
+          <input type="number" class="field-input" id="av-weight"
+                 placeholder="75" min="40" max="200"
+                 oninput="AvatarUI.onFieldChange()" />
+        </div>
+      </div>
+
+      <div class="avatar-field-row">
+        <div class="avatar-field">
+          <label class="field-label">Meta de peso (kg)</label>
+          <input type="number" class="field-input" id="av-goal"
+                 placeholder="70" min="40" max="200"
+                 oninput="AvatarUI.onFieldChange()" />
+        </div>
+        <div class="avatar-field">
+          <label class="field-label">Tipo de treino</label>
+          <select class="field-input field-select" id="av-train"
+                  onchange="AvatarUI.onFieldChange()">
+            <option value="misto">Misto</option>
+            <option value="forca">Força / Hipertrofia</option>
+            <option value="cardio">Cardio / Emagrecimento</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Optional measurements -->
+      <div class="avatar-optional-label">Medidas opcionais</div>
+      <div class="avatar-field-row">
+        <div class="avatar-field">
+          <label class="field-label">Cintura (cm)</label>
+          <input type="number" class="field-input" id="av-waist"
+                 placeholder="—" min="50" max="160"
+                 oninput="AvatarUI.onFieldChange()" />
+        </div>
+        <div class="avatar-field">
+          <label class="field-label">Braço (cm)</label>
+          <input type="number" class="field-input" id="av-arm"
+                 placeholder="—" min="20" max="60"
+                 oninput="AvatarUI.onFieldChange()" />
+        </div>
+      </div>
+      <div class="avatar-field-row">
+        <div class="avatar-field">
+          <label class="field-label">Peito (cm)</label>
+          <input type="number" class="field-input" id="av-chest"
+                 placeholder="—" min="60" max="160"
+                 oninput="AvatarUI.onFieldChange()" />
+        </div>
+        <div class="avatar-field"></div>
+      </div>
+
+      <button class="btn-primary avatar-save-btn" onclick="AvatarUI.saveProfile()">
+        Atualizar Avatar
+      </button>
+    </div>
+
+    <!-- Evolution Timeline -->
+    <div class="card">
+      <div class="card-label">Evolução do Corpo</div>
+      <div id="avatar-evolution-log" class="avatar-evo-log">
+        <p style="color:var(--text-mute);font-size:13px;padding:8px 0">
+          Complete missões para ver seu avatar evoluir aqui.
+        </p>
+      </div>
+    </div>
+
+    <!-- Stats derived -->
+    <div class="card">
+      <div class="card-label">Projeção Atual</div>
+      <div class="avatar-stats-grid" id="avatar-stats-derived"></div>
+    </div>
+
+  </div>
+</section>
+
+<!--
+  ─── BOTTOM NAV (substitua o nav existente no index.html) ───────
+  
+<nav class="bottom-nav">
+  <button class="nav-btn active" data-page="dashboard" onclick="App.nav('dashboard')">
+    <span class="nav-icon">⬡</span><span class="nav-label">Reino</span>
+  </button>
+  <button class="nav-btn" data-page="missions" onclick="App.nav('missions')">
+    <span class="nav-icon">◈</span><span class="nav-label">Missões</span>
+  </button>
+  <button class="nav-btn" data-page="avatar" onclick="App.nav('avatar')">
+    <span class="nav-icon">◉</span><span class="nav-label">Avatar</span>
+  </button>
+  <button class="nav-btn" data-page="character" onclick="App.nav('character')">
+    <span class="nav-icon">⚔</span><span class="nav-label">Self</span>
+  </button>
+  <button class="nav-btn" data-page="progress" onclick="App.nav('progress')">
+    <span class="nav-icon">◎</span><span class="nav-label">Registro</span>
+  </button>
+</nav>
+-->
